@@ -31,6 +31,10 @@ urlpatterns = [
 
     path('api/auth/', include('users.urls')),
 
+    path('api/events/', include('events.urls')),
+
+    path('api/gyms/', include('gyms.urls')),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

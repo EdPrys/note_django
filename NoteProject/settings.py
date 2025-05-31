@@ -14,6 +14,9 @@ import os
 import dj_database_url
 from pathlib import Path
 from datetime import timedelta
+from decouple import config
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +31,7 @@ SECRET_KEY = 'django-insecure-$*&x-6(n-r^pa(rzkw%ivb(=k9(sb=&m#k%328#dnafe6s^p-p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['note-django-d6n2.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -43,6 +46,9 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'notes',
+    'accounts',
+    'gyms',
+    'events',
 ]
 
 MIDDLEWARE = [
@@ -82,7 +88,14 @@ WSGI_APPLICATION = 'NoteProject.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(conn_max_age=600)
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_HOST'),
+        'PORT': os.getenv('POSTGRES_PORT'),
+    }
 }
 
 # Password validation
